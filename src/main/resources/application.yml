@@ -1,0 +1,18 @@
+server:
+    port: 8090
+    servlet:
+      context-path: /api
+spring:
+  application-name: "Gestion tion des taches"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3316/gestion-des-taches
+    username: root
+    password: mdp
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
