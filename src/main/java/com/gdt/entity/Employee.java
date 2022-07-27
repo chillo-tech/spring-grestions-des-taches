@@ -1,5 +1,6 @@
 package com.gdt.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,9 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Employes
+ */
 @Entity
 @Table(name = "EMPLOYEE")
 public class Employee {
@@ -20,8 +24,12 @@ public class Employee {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String userName;
 
+    /**
+     * Relation employé et tache
+     */
     @JoinTable(name="employee_tasks")
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Task> tasks;

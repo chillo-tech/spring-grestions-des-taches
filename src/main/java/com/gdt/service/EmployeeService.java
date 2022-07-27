@@ -11,5 +11,5 @@ public interface EmployeeService {
     Employee update( Employee employee, Long id);
     void delete(Long id);
 
-    void taskToUser(Long taskId, Long userId);
+    void taskToUser(Long taskId, Long employeeId);
 }

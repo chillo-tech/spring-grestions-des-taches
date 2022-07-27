@@ -6,7 +6,7 @@ spring:
   application-name: "Gestion tion des taches"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
