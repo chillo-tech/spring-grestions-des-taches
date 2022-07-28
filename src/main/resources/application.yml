@@ -2,6 +2,13 @@ server:
     port: 8091
     servlet:
       context-path: /api
+
+      To log values:
+
+logging:
+    level:
+        org.hibernate.type: trace
+
 spring:
   application-name: "Gestion tion des taches"
   liquibase:
@@ -13,6 +20,9 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
     url: jdbc:mysql://localhost:3316/gestion-taches

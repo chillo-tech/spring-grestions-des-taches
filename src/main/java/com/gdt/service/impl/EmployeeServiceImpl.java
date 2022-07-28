@@ -50,6 +50,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getByUserName(String username) {
+        return this.employeeRepository
+                .findByUserName(username)
+                .orElseThrow(()-> new BadrequestException("Aucun employé trouvé", null));
+    }
+
+    @Override
     public Employee update(Employee employee, Integer id) {
         Employee currentEmployee = this.read(id);
         currentEmployee.setFirstName(employee.getFirstName());

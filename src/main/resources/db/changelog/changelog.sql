@@ -50,3 +50,19 @@ CREATE TABLE EMPLOYEE_ROLE (
 INSERT into ROLE(label) values ('ADMIN');
 INSERT into ROLE(label) values ('USER');
 INSERT into ROLE(label) values ('MANAGER');
+
+
+-- changeset EMPLOYE_44:6
+CREATE TABLE CONFIRMATION_TOKEN (
+    ID INT NOT NULL AUTO_INCREMENT,
+    value varchar(6),
+    creation timestamp,
+    EMPLOYEE_ID INT NOT NULL,
+    FOREIGN KEY (EMPLOYEE_ID) REFERENCES EMPLOYEE(ID),
+
+    PRIMARY KEY (ID)
+);
+
+
+-- changeset EMPLOYE_44:7
+ALTER TABLE CONFIRMATION_TOKEN ADD COLUMN activation timestamp;
