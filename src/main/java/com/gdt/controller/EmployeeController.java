@@ -45,6 +45,6 @@ public class EmployeeController {
 
     @GetMapping
     public List<Employee> search(){
-        return this.employeeService.search();
+        return this.employeeService.search(null);
     }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,13 +26,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> search() {
-        return this.employeeRepository.findAll();
+    public List<Employee> search(String q) {
+        if (q == null) {
+            return this.employeeRepository.findAll();
+        }
+        return this.employeeRepository.search(q).collect(Collectors.toList());
     }
 
     @Override
     public void create(Employee employee) {
-        Optional<Employee> employeeOptional = this.employeeRepository.findByUserName(employee.getUserName());
+        Optional<Employee> employeeOptional = this.employeeRepository.findByUserName(employee.getUsername());
 
         if(employeeOptional.isPresent()) {
             throw new BadrequestException("Message", "Code");

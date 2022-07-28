@@ -1,5 +1,6 @@
 package com.gdt.entity;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 @Table(name = "EMPLOYEE")
-public class Employee {
+public class Employee implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +44,14 @@ public class Employee {
     
     @Column(name ="LAST_NAME")
     private String lastName;
-
+    @Getter(AccessLevel.NONE)
     @Column(name ="USERNAME_NAME")
     private String userName;
+
+    @Column(name ="PASSWORD")
+    private String password;
+
+    private boolean enabled;
 
     /**
      * Relation employé et tache
@@ -56,5 +62,41 @@ public class Employee {
             inverseJoinColumns = @JoinColumn(name = "TASK_ID"))
     private List<Task> tasks;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "EMPLOYEE_ROLE",
+            joinColumns = @JoinColumn(name = "EMPLOYEE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private List<Role> roles;
 
+    @Override
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getLabel()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 }

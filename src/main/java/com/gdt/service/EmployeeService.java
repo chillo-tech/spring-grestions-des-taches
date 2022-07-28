@@ -5,7 +5,7 @@ import com.gdt.entity.Employee;
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> search();
+    List<Employee> search(String q);
     void create(Employee employee);
     Employee read(Integer id);
     Employee update( Employee employee, Integer id);
