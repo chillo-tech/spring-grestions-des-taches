@@ -4,5 +4,5 @@ import com.gdt.entity.Task;
 
 public interface TaskService {
     void create(Task task);
-    Task read(Long id);
+    Task read(Integer id);
 }

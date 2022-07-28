@@ -41,12 +41,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee read(Long id) {
+    public Employee read(Integer id) {
         return this.employeeRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Employee update(Employee employee, Long id) {
+    public Employee update(Employee employee, Integer id) {
         Employee currentEmployee = this.read(id);
         currentEmployee.setFirstName(employee.getFirstName());
         currentEmployee.setLastName(employee.getLastName());
@@ -54,13 +54,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         this.employeeRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public void taskToUser(Long taskId, Long employeeId) {
+    public void taskToUser(Integer taskId, Integer employeeId) {
         // Tache
         Task task = this.taskService.read(taskId);
 

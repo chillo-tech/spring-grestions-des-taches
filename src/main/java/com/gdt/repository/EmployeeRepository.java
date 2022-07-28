@@ -8,6 +8,6 @@ import java.util.Optional;
 /**
  * Accès à la base de données
  */
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByUserName(String username);
 }

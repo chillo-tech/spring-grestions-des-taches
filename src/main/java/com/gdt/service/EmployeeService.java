@@ -7,9 +7,9 @@ import java.util.List;
 public interface EmployeeService {
     List<Employee> search();
     void create(Employee employee);
-    Employee read(Long id);
-    Employee update( Employee employee, Long id);
-    void delete(Long id);
+    Employee read(Integer id);
+    Employee update( Employee employee, Integer id);
+    void delete(Integer id);
 
-    void taskToUser(Long taskId, Long employeeId);
+    void taskToUser(Integer taskId, Integer employeeId);
 }

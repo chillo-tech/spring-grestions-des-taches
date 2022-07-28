@@ -35,7 +35,7 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/{employeeId}/task")
-    public void taskToUser(@Validated @RequestBody UserTask userTask, @PathVariable Long employeeId){
+    public void taskToUser(@Validated @RequestBody UserTask userTask, @PathVariable Integer employeeId){
         this.employeeService.taskToUser(
                 employeeId,
                 userTask.getEmployeeId()

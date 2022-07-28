@@ -26,7 +26,7 @@ public class Taskcontroller {
     }
 
     @GetMapping(path = "{id}")
-    public Task create(@PathVariable Long id) {
+    public Task create(@PathVariable Integer id) {
         return this.taskService.read(id);
     }
 

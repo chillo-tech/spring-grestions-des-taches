@@ -1,17 +1,21 @@
 server:
-    port: 8090
+    port: 8091
     servlet:
       context-path: /api
 spring:
   application-name: "Gestion tion des taches"
+  liquibase:
+    change-log: classpath:db/changelog/changelog.sql
   jpa:
     hibernate:
-      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
   datasource:
-    url: jdbc:mysql://localhost:3316/gestion-des-taches
+    url: jdbc:mysql://localhost:3316/gestion-taches
     username: root
     password: mdp
     driver-class-name: com.mysql.cj.jdbc.Driver
