@@ -14,7 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 @AllArgsConstructor
@@ -22,18 +24,26 @@ import static org.springframework.http.HttpMethod.POST;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurations {
-
+    private JWTEntryPoint jwtEntryPoint;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private AccountService accountService;
+    private JWTTokenUtils jwtTokenUtils;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests(
+       
+        httpSecurity
+                .authorizeRequests(
                 (query)->
                         query
                                 .anyRequest().authenticated()
 
-        ).httpBasic(Customizer.withDefaults());
+                ).exceptionHandling()
+                .authenticationEntryPoint(jwtEntryPoint)
+                .and()
+                .httpBasic(Customizer.withDefaults());
+        JWTfilter jwtFilter = new JWTfilter(accountService, jwtTokenUtils, "Authorization");
+        httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
