@@ -1,16 +1,20 @@
 package com.gdt.service.impl;
 
+import com.gdt.dto.AuthenticationDTO;
+import com.gdt.dto.TokenDTO;
 import com.gdt.entity.ConfirmationToken;
 import com.gdt.entity.Employee;
 import com.gdt.entity.Role;
 import com.gdt.enums.UserRole;
 import com.gdt.exceptions.BadrequestException;
 import com.gdt.repository.RoleRepository;
+import com.gdt.security.JWTTokenUtils;
 import com.gdt.service.AccountService;
 import com.gdt.service.ConfirmationService;
 import com.gdt.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +34,7 @@ public class AccountServiceImpl implements AccountService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private EmployeeService employeeService;
     private ConfirmationService confirmationService;
+    private JWTTokenUtils jwtTokenUtils;
 
     @Override
     public void signup(Employee employee) {
@@ -71,5 +76,19 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.employeeService.getByUserName(username);
+    }
+
+    @Override
+    public TokenDTO generateTokens(AuthenticationDTO authenticationDTO) {
+        Employee employee = this.employeeService.getByUserName(authenticationDTO.getUsername());
+        String authenticationToken = this.jwtTokenUtils.generateToken(employee);
+        String refreshToken = RandomStringUtils.random(100, true, true);
+        TokenDTO tokens  = new TokenDTO();
+
+        // Stocker un objet AUTHDATA (TOKENDTO et EMPLOYEE)
+
+        tokens.setAuthentification(authenticationToken);
+        tokens.setRefresh(refreshToken);
+        return tokens;
     }
 }
