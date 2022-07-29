@@ -30,3 +30,13 @@ spring:
     password: mdp
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+jwt:
+  header: "Authorization"
+  infos: "USER_INFOS"
+  secret: "AL_KEY"
+  expiration: 3600 # (secondes) == 1 heure
+  route:
+    authentication:
+      path: "/login"
+      refresh: "/refresh"
+
